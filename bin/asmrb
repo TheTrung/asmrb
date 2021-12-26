@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+dir = File.expand_path(File.dirname(__FILE__))
+require dir + '/../lib/asmrb.rb'
+
+require 'oyster'
+spec = Oyster.spec do
+  name "asmrb -- Lisp to ruby transformation"#, v. #{Heist::VERSION}"
+  author 'The Trung <deulamco@mail.com>'
+  
+  synopsis <<-EOS
+    asmrb -i [OPTIONS]
+    asmrb FILE_NAME [OPTIONS]
+  EOS
+  
+  flag :interactive, :desc =>
+        'Start an interactive Scheme session'
+end
+
+
+begin
+  options = spec.parse
+  
+  if options[:interactive] or options[:unclaimed].empty?
+    puts "Not implemented yet"
+  else
+    Asmrb.new.eval_file File.expand_path(options[:unclaimed].first)
+  end
+
+rescue Oyster::HelpRendered
+end
